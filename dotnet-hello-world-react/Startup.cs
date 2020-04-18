@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
 
 namespace dotnet_hello_world_react
@@ -22,7 +22,9 @@ namespace dotnet_hello_world_react
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+      services.AddDbContext<TodoContext>(opt =>
+              opt.UseInMemoryDatabase("TodoList"));
+      services.AddControllers();
       services.AddControllersWithViews();
 
       // In production, the React files will be served from this directory
@@ -71,11 +73,3 @@ namespace dotnet_hello_world_react
     }
   }
 }
-
-
-/*
-dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
-dotnet add package Microsoft.EntityFrameworkCore.Design
-dotnet tool install --global dotnet-aspnet-codegenerator
-dotnet aspnet-codegenerator controller -name TodoItemsController -async -api -m TodoItem -dc TodoContext -outDir Controllers
- */
